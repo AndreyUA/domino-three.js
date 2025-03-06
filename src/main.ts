@@ -1,3 +1,5 @@
 import "./style.css";
 
-console.log("Hello, World!");
+import * as THREE from "three";
+
+console.log("Hello, three.js ! ", THREE);
