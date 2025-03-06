@@ -5,6 +5,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import RAPIER from "@dimforge/rapier3d-compat";
 import GUI from "lil-gui";
 import { createBox } from "./box";
+import { createFlor } from "./floor";
 
 const canvas = document.querySelector("canvas.webgl") as HTMLCanvasElement;
 
@@ -54,6 +55,9 @@ const gui = new GUI();
 
 const box = createBox({ x: 0, y: 0, z: 0 });
 scene.add(box);
+
+const floor = createFlor();
+scene.add(floor);
 
 const clock = new THREE.Clock();
 let oldElapseTime = 0;
