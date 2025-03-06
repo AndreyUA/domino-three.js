@@ -3,6 +3,7 @@ import "./style.css";
 import * as THREE from "three";
 import RAPIER from "@dimforge/rapier3d-compat";
 import GUI from "lil-gui";
+import { createBox } from "./box";
 
 const canvas = document.querySelector("canvas.webgl") as HTMLCanvasElement;
 
@@ -20,7 +21,7 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   100
 );
-camera.position.set(3, 3, 3);
+camera.position.set(0, 0, 3);
 scene.add(camera);
 // Renderer
 const renderer = new THREE.WebGLRenderer({
@@ -31,7 +32,24 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
+const ambientLight = new THREE.AmbientLight(0xffffff, 2.1);
+scene.add(ambientLight);
+
+const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
+directionalLight.castShadow = true;
+directionalLight.shadow.mapSize.set(1024, 1024);
+directionalLight.shadow.camera.far = 15;
+directionalLight.shadow.camera.left = -7;
+directionalLight.shadow.camera.top = 7;
+directionalLight.shadow.camera.right = 7;
+directionalLight.shadow.camera.bottom = -7;
+directionalLight.position.set(5, 5, 5);
+scene.add(directionalLight);
+
 const gui = new GUI();
+
+const box = createBox({ x: 0, y: 0, z: 0 });
+scene.add(box);
 
 const clock = new THREE.Clock();
 let oldElapseTime = 0;
