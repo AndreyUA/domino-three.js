@@ -1,8 +1,7 @@
 import "./style.css";
 
 import * as THREE from "three";
-
 import RAPIER from "@dimforge/rapier3d-compat";
+import GUI from "lil-gui";
 
-console.log("Hello, three.js ! ", THREE);
-console.log("Hello, rapier ! ", RAPIER);
+const gui = new GUI();
