@@ -1,6 +1,7 @@
 import "./style.css";
 
 import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import RAPIER from "@dimforge/rapier3d-compat";
 import GUI from "lil-gui";
 import { createBox } from "./box";
@@ -21,7 +22,7 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   100
 );
-camera.position.set(0, 0, 3);
+camera.position.set(3, 3, 3);
 scene.add(camera);
 // Renderer
 const renderer = new THREE.WebGLRenderer({
@@ -31,6 +32,9 @@ renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+// Controls
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
 
 const ambientLight = new THREE.AmbientLight(0xffffff, 2.1);
 scene.add(ambientLight);
@@ -58,6 +62,7 @@ const tick = () => {
   const deltaTime = elapsedTime - oldElapseTime;
   oldElapseTime = elapsedTime;
 
+  controls.update();
   renderer.render(scene, camera);
   window.requestAnimationFrame(tick);
 };
