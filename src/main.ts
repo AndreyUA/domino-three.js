@@ -23,7 +23,7 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   100
 );
-camera.position.set(3, 3, 3);
+camera.position.set(-8, 10, -6);
 scene.add(camera);
 // Renderer
 const renderer = new THREE.WebGLRenderer({
@@ -53,8 +53,17 @@ scene.add(directionalLight);
 
 const gui = new GUI();
 
-const box = createBox({ x: 0, y: 0, z: 0 });
-scene.add(box);
+const numberOfBoxes = 200;
+for (let index = 1; index < numberOfBoxes + 1; index++) {
+  const coefficient = Math.ceil(index / 20) * 4;
+
+  const x = coefficient - 5;
+  const y = 1;
+  const z = (index % 20) - 5;
+
+  const box = createBox({ x, y, z });
+  scene.add(box);
+}
 
 const floor = createFlor();
 scene.add(floor);
