@@ -54,7 +54,7 @@ scene.add(directionalLight);
 const gui = new GUI();
 
 const numberOfBoxes = 400;
-for (let index = 1; index < numberOfBoxes + 1; index++) {
+for (let index = 1; index < numberOfBoxes; index++) {
   const coefficient = Math.ceil(index / 20) * 4;
 
   const x = coefficient - 5;
