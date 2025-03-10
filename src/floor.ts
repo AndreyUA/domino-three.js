@@ -1,8 +1,9 @@
 import * as THREE from "three";
+import RAPIER from "@dimforge/rapier3d-compat";
 
-export const createFlor = () => {
+export const createFlor = (world: RAPIER.World) => {
   const floor = new THREE.Mesh(
-    new THREE.PlaneGeometry(1_000, 1_000),
+    new THREE.BoxGeometry(200, 1, 200),
     new THREE.MeshStandardMaterial({
       color: "#777777",
       metalness: 0.3,
@@ -11,7 +12,12 @@ export const createFlor = () => {
     })
   );
   floor.receiveShadow = true;
-  floor.rotation.x = -Math.PI * 0.5;
+  floor.position.y = -0.5;
+
+  const floorBody = RAPIER.RigidBodyDesc.fixed().setTranslation(0, -0.5, 0);
+  const floorCollider = RAPIER.ColliderDesc.cuboid(100, 0.5, 100);
+  const floorRigidBody = world.createRigidBody(floorBody);
+  world.createCollider(floorCollider, floorRigidBody);
 
   return floor;
 };
