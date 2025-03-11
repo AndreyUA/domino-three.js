@@ -240,12 +240,12 @@ RAPIER.init().then(() => {
   const floor = createFlor(world);
   scene.add(floor);
 
-  const clock = new THREE.Clock();
-  let oldElapseTime = 0;
+  // const clock = new THREE.Clock();
+  // let oldElapseTime = 0;
   const tick = () => {
-    const elapsedTime = clock.getElapsedTime();
+    // const elapsedTime = clock.getElapsedTime();
     // const _deltaTime = elapsedTime - oldElapseTime;
-    oldElapseTime = elapsedTime;
+    // oldElapseTime = elapsedTime;
 
     world.step();
 
