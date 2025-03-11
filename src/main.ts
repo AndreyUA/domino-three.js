@@ -70,7 +70,6 @@ RAPIER.init().then(() => {
     if (index % 40 === 0) {
       const newZ = z + 20;
 
-      // TODO: connect it with physics world
       box.mesh.rotateY(Math.PI / 3);
       box.mesh.position.x = x + 0.5;
       box.mesh.position.z = newZ;
@@ -100,7 +99,7 @@ RAPIER.init().then(() => {
         scene,
         arrayOfBoxes,
       });
-      // TODO: connect it with physics world
+
       firstAdditionalBox.mesh.rotateY(Math.PI / 2);
       firstAdditionalBox.rigidBody.setTranslation(
         new RAPIER.Vector3(
@@ -128,8 +127,8 @@ RAPIER.init().then(() => {
         scene,
         arrayOfBoxes,
       });
-      // TODO: connect it with physics world
-      secondAdditionalBox.mesh.rotateY(-Math.PI / 3);
+
+      secondAdditionalBox.mesh.rotateY(-Math.PI / 6);
       secondAdditionalBox.rigidBody.setTranslation(
         new RAPIER.Vector3(
           secondAdditionalBox.mesh.position.x,
@@ -156,7 +155,6 @@ RAPIER.init().then(() => {
     }
 
     if ((index / 20) % 2 !== 0) {
-      // TODO: connect it with physics world
       box.mesh.rotateY(-Math.PI / 3);
       box.mesh.position.x = x + 0.5;
       box.rigidBody.setTranslation(
@@ -185,7 +183,7 @@ RAPIER.init().then(() => {
         scene,
         arrayOfBoxes,
       });
-      // TODO: connect it with physics world
+
       firstAdditionalBox.mesh.rotateY(Math.PI / 2);
       firstAdditionalBox.rigidBody.setTranslation(
         new RAPIER.Vector3(
@@ -213,8 +211,8 @@ RAPIER.init().then(() => {
         scene,
         arrayOfBoxes,
       });
-      // TODO: connect it with physics world
-      secondAdditionalBox.mesh.rotateY(Math.PI / 3);
+
+      secondAdditionalBox.mesh.rotateY(Math.PI / 6);
       secondAdditionalBox.rigidBody.setTranslation(
         new RAPIER.Vector3(
           secondAdditionalBox.mesh.position.x,
