@@ -56,182 +56,186 @@ RAPIER.init().then(() => {
   directionalLight.position.set(50, 50, 5);
   scene.add(directionalLight);
 
-  const numberOfBoxes = 400;
-  for (let index = 1; index < numberOfBoxes; index++) {
-    const coefficient = Math.ceil(index / 20) * 4;
+  const createAllBoxes = () => {
+    const numberOfBoxes = 400;
+    for (let index = 1; index < numberOfBoxes; index++) {
+      const coefficient = Math.ceil(index / 20) * 4;
 
-    const x = coefficient - 5;
-    const y = 1;
-    const z = (index % 20) - 5;
+      const x = coefficient - 5;
+      const y = 1;
+      const z = (index % 20) - 5;
 
-    const box = createBox({ x, y, z, world, scene, arrayOfBoxes });
+      const box = createBox({ x, y, z, world, scene, arrayOfBoxes });
 
-    // Rounding logic
-    if (index % 40 === 0) {
-      const newZ = z + 20;
+      // Rounding logic
+      if (index % 40 === 0) {
+        const newZ = z + 20;
 
-      box.mesh.rotateY(Math.PI / 3);
-      box.mesh.position.x = x + 0.5;
-      box.mesh.position.z = newZ;
-      box.rigidBody.setTranslation(
-        new RAPIER.Vector3(
-          box.mesh.position.x,
-          box.mesh.position.y,
-          box.mesh.position.z
-        ),
-        false
-      );
-      box.rigidBody.setRotation(
-        new RAPIER.Quaternion(
-          box.mesh.quaternion.x,
-          box.mesh.quaternion.y,
-          box.mesh.quaternion.z,
-          box.mesh.quaternion.w
-        ),
-        false
-      );
+        box.mesh.rotateY(Math.PI / 3);
+        box.mesh.position.x = x + 0.5;
+        box.mesh.position.z = newZ;
+        box.rigidBody.setTranslation(
+          new RAPIER.Vector3(
+            box.mesh.position.x,
+            box.mesh.position.y,
+            box.mesh.position.z
+          ),
+          false
+        );
+        box.rigidBody.setRotation(
+          new RAPIER.Quaternion(
+            box.mesh.quaternion.x,
+            box.mesh.quaternion.y,
+            box.mesh.quaternion.z,
+            box.mesh.quaternion.w
+          ),
+          false
+        );
 
-      const firstAdditionalBox = createBox({
-        x: x + 2,
-        y,
-        z: newZ,
-        world,
-        scene,
-        arrayOfBoxes,
-      });
+        const firstAdditionalBox = createBox({
+          x: x + 2,
+          y,
+          z: newZ,
+          world,
+          scene,
+          arrayOfBoxes,
+        });
 
-      firstAdditionalBox.mesh.rotateY(Math.PI / 2);
-      firstAdditionalBox.rigidBody.setTranslation(
-        new RAPIER.Vector3(
-          firstAdditionalBox.mesh.position.x,
-          firstAdditionalBox.mesh.position.y,
-          firstAdditionalBox.mesh.position.z
-        ),
-        false
-      );
-      firstAdditionalBox.rigidBody.setRotation(
-        new RAPIER.Quaternion(
-          firstAdditionalBox.mesh.quaternion.x,
-          firstAdditionalBox.mesh.quaternion.y,
-          firstAdditionalBox.mesh.quaternion.z,
-          firstAdditionalBox.mesh.quaternion.w
-        ),
-        false
-      );
+        firstAdditionalBox.mesh.rotateY(Math.PI / 2);
+        firstAdditionalBox.rigidBody.setTranslation(
+          new RAPIER.Vector3(
+            firstAdditionalBox.mesh.position.x,
+            firstAdditionalBox.mesh.position.y,
+            firstAdditionalBox.mesh.position.z
+          ),
+          false
+        );
+        firstAdditionalBox.rigidBody.setRotation(
+          new RAPIER.Quaternion(
+            firstAdditionalBox.mesh.quaternion.x,
+            firstAdditionalBox.mesh.quaternion.y,
+            firstAdditionalBox.mesh.quaternion.z,
+            firstAdditionalBox.mesh.quaternion.w
+          ),
+          false
+        );
 
-      const secondAdditionalBox = createBox({
-        x: x + 3.5,
-        y,
-        z: newZ,
-        world,
-        scene,
-        arrayOfBoxes,
-      });
+        const secondAdditionalBox = createBox({
+          x: x + 3.5,
+          y,
+          z: newZ,
+          world,
+          scene,
+          arrayOfBoxes,
+        });
 
-      secondAdditionalBox.mesh.rotateY(-Math.PI / 6);
-      secondAdditionalBox.rigidBody.setTranslation(
-        new RAPIER.Vector3(
-          secondAdditionalBox.mesh.position.x,
-          secondAdditionalBox.mesh.position.y,
-          secondAdditionalBox.mesh.position.z
-        ),
-        false
-      );
-      secondAdditionalBox.rigidBody.setRotation(
-        new RAPIER.Quaternion(
-          secondAdditionalBox.mesh.quaternion.x,
-          secondAdditionalBox.mesh.quaternion.y,
-          secondAdditionalBox.mesh.quaternion.z,
-          secondAdditionalBox.mesh.quaternion.w
-        ),
-        false
-      );
+        secondAdditionalBox.mesh.rotateY(-Math.PI / 6);
+        secondAdditionalBox.rigidBody.setTranslation(
+          new RAPIER.Vector3(
+            secondAdditionalBox.mesh.position.x,
+            secondAdditionalBox.mesh.position.y,
+            secondAdditionalBox.mesh.position.z
+          ),
+          false
+        );
+        secondAdditionalBox.rigidBody.setRotation(
+          new RAPIER.Quaternion(
+            secondAdditionalBox.mesh.quaternion.x,
+            secondAdditionalBox.mesh.quaternion.y,
+            secondAdditionalBox.mesh.quaternion.z,
+            secondAdditionalBox.mesh.quaternion.w
+          ),
+          false
+        );
 
-      continue;
+        continue;
+      }
+
+      if (!(index / coefficient === 5)) {
+        continue;
+      }
+
+      if ((index / 20) % 2 !== 0) {
+        box.mesh.rotateY(-Math.PI / 3);
+        box.mesh.position.x = x + 0.5;
+        box.rigidBody.setTranslation(
+          new RAPIER.Vector3(
+            box.mesh.position.x,
+            box.mesh.position.y,
+            box.mesh.position.z
+          ),
+          false
+        );
+        box.rigidBody.setRotation(
+          new RAPIER.Quaternion(
+            box.mesh.quaternion.x,
+            box.mesh.quaternion.y,
+            box.mesh.quaternion.z,
+            box.mesh.quaternion.w
+          ),
+          false
+        );
+
+        const firstAdditionalBox = createBox({
+          x: x + 2,
+          y,
+          z,
+          world,
+          scene,
+          arrayOfBoxes,
+        });
+
+        firstAdditionalBox.mesh.rotateY(Math.PI / 2);
+        firstAdditionalBox.rigidBody.setTranslation(
+          new RAPIER.Vector3(
+            firstAdditionalBox.mesh.position.x,
+            firstAdditionalBox.mesh.position.y,
+            firstAdditionalBox.mesh.position.z
+          ),
+          false
+        );
+        firstAdditionalBox.rigidBody.setRotation(
+          new RAPIER.Quaternion(
+            firstAdditionalBox.mesh.quaternion.x,
+            firstAdditionalBox.mesh.quaternion.y,
+            firstAdditionalBox.mesh.quaternion.z,
+            firstAdditionalBox.mesh.quaternion.w
+          ),
+          false
+        );
+
+        const secondAdditionalBox = createBox({
+          x: x + 3.5,
+          y,
+          z,
+          world,
+          scene,
+          arrayOfBoxes,
+        });
+
+        secondAdditionalBox.mesh.rotateY(Math.PI / 6);
+        secondAdditionalBox.rigidBody.setTranslation(
+          new RAPIER.Vector3(
+            secondAdditionalBox.mesh.position.x,
+            secondAdditionalBox.mesh.position.y,
+            secondAdditionalBox.mesh.position.z
+          ),
+          false
+        );
+        secondAdditionalBox.rigidBody.setRotation(
+          new RAPIER.Quaternion(
+            secondAdditionalBox.mesh.quaternion.x,
+            secondAdditionalBox.mesh.quaternion.y,
+            secondAdditionalBox.mesh.quaternion.z,
+            secondAdditionalBox.mesh.quaternion.w
+          ),
+          false
+        );
+      }
     }
+  };
 
-    if (!(index / coefficient === 5)) {
-      continue;
-    }
-
-    if ((index / 20) % 2 !== 0) {
-      box.mesh.rotateY(-Math.PI / 3);
-      box.mesh.position.x = x + 0.5;
-      box.rigidBody.setTranslation(
-        new RAPIER.Vector3(
-          box.mesh.position.x,
-          box.mesh.position.y,
-          box.mesh.position.z
-        ),
-        false
-      );
-      box.rigidBody.setRotation(
-        new RAPIER.Quaternion(
-          box.mesh.quaternion.x,
-          box.mesh.quaternion.y,
-          box.mesh.quaternion.z,
-          box.mesh.quaternion.w
-        ),
-        false
-      );
-
-      const firstAdditionalBox = createBox({
-        x: x + 2,
-        y,
-        z,
-        world,
-        scene,
-        arrayOfBoxes,
-      });
-
-      firstAdditionalBox.mesh.rotateY(Math.PI / 2);
-      firstAdditionalBox.rigidBody.setTranslation(
-        new RAPIER.Vector3(
-          firstAdditionalBox.mesh.position.x,
-          firstAdditionalBox.mesh.position.y,
-          firstAdditionalBox.mesh.position.z
-        ),
-        false
-      );
-      firstAdditionalBox.rigidBody.setRotation(
-        new RAPIER.Quaternion(
-          firstAdditionalBox.mesh.quaternion.x,
-          firstAdditionalBox.mesh.quaternion.y,
-          firstAdditionalBox.mesh.quaternion.z,
-          firstAdditionalBox.mesh.quaternion.w
-        ),
-        false
-      );
-
-      const secondAdditionalBox = createBox({
-        x: x + 3.5,
-        y,
-        z,
-        world,
-        scene,
-        arrayOfBoxes,
-      });
-
-      secondAdditionalBox.mesh.rotateY(Math.PI / 6);
-      secondAdditionalBox.rigidBody.setTranslation(
-        new RAPIER.Vector3(
-          secondAdditionalBox.mesh.position.x,
-          secondAdditionalBox.mesh.position.y,
-          secondAdditionalBox.mesh.position.z
-        ),
-        false
-      );
-      secondAdditionalBox.rigidBody.setRotation(
-        new RAPIER.Quaternion(
-          secondAdditionalBox.mesh.quaternion.x,
-          secondAdditionalBox.mesh.quaternion.y,
-          secondAdditionalBox.mesh.quaternion.z,
-          secondAdditionalBox.mesh.quaternion.w
-        ),
-        false
-      );
-    }
-  }
+  createAllBoxes();
 
   const floor = createFlor(world);
   scene.add(floor);
@@ -279,7 +283,18 @@ RAPIER.init().then(() => {
       const impulse = { x: 0, y: 0, z: -2 };
       arrayOfBoxes[18].rigidBody.addForce(impulse, true);
     },
-    restart: () => {},
+    restart: () => {
+      if (arrayOfBoxes.length > 0) {
+        arrayOfBoxes.forEach(({ rigidBody, mesh }) => {
+          world.removeRigidBody(rigidBody);
+          scene.remove(mesh);
+        });
+      }
+
+      arrayOfBoxes.length = 0;
+
+      createAllBoxes();
+    },
   };
 
   gui.add(debugObject, "start");
