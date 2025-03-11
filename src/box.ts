@@ -1,6 +1,15 @@
 import * as THREE from "three";
 import RAPIER from "@dimforge/rapier3d-compat";
 
+export interface BoxResult {
+  rigidBody: RAPIER.RigidBody;
+  mesh: THREE.Mesh<
+    THREE.BoxGeometry,
+    THREE.MeshStandardMaterial,
+    THREE.Object3DEventMap
+  >;
+}
+
 const boxGeometry = new THREE.BoxGeometry(1, 2, 0.2);
 const boxMaterial = new THREE.MeshStandardMaterial({
   metalness: 0.3,
@@ -12,25 +21,16 @@ export const createBox = ({
   y,
   z,
   world,
+  scene,
   arrayOfBoxes,
 }: {
   x: number;
   y: number;
   z: number;
   world: RAPIER.World;
-  arrayOfBoxes: Array<{
-    cubeRigidBody: RAPIER.RigidBody;
-    mesh: THREE.Mesh<
-      THREE.BoxGeometry,
-      THREE.MeshStandardMaterial,
-      THREE.Object3DEventMap
-    >;
-  }>;
-}): THREE.Mesh<
-  THREE.BoxGeometry,
-  THREE.MeshStandardMaterial,
-  THREE.Object3DEventMap
-> => {
+  scene: THREE.Scene;
+  arrayOfBoxes: Array<BoxResult>;
+}): BoxResult => {
   const mesh = new THREE.Mesh(boxGeometry, boxMaterial);
   mesh.castShadow = true;
   mesh.position.copy({
@@ -46,7 +46,14 @@ export const createBox = ({
   const cubeRigidBody = world.createRigidBody(cubeBody);
   world.createCollider(cubeCollider, cubeRigidBody);
 
-  arrayOfBoxes.push({ cubeRigidBody, mesh });
+  scene.add(mesh);
 
-  return mesh;
+  const result = {
+    rigidBody: cubeRigidBody,
+    mesh,
+  };
+
+  arrayOfBoxes.push(result);
+
+  return result;
 };

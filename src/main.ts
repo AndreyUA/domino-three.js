@@ -4,18 +4,11 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import RAPIER from "@dimforge/rapier3d-compat";
 import GUI from "lil-gui";
-import { createBox } from "./box";
+import { BoxResult, createBox } from "./box";
 import { createFlor } from "./floor";
 
 RAPIER.init().then(() => {
-  const arrayOfBoxes: Array<{
-    cubeRigidBody: RAPIER.RigidBody;
-    mesh: THREE.Mesh<
-      THREE.BoxGeometry,
-      THREE.MeshStandardMaterial,
-      THREE.Object3DEventMap
-    >;
-  }> = [];
+  const arrayOfBoxes: Array<BoxResult> = [];
   const gravity = { x: 0, y: -9.81, z: 0 };
   const world = new RAPIER.World(gravity);
 
@@ -71,39 +64,89 @@ RAPIER.init().then(() => {
     const y = 1;
     const z = (index % 20) - 5;
 
-    const box = createBox({ x, y, z, world, arrayOfBoxes });
-    scene.add(box);
+    const box = createBox({ x, y, z, world, scene, arrayOfBoxes });
 
     // Rounding logic
     if (index % 40 === 0) {
       const newZ = z + 20;
 
       // TODO: connect it with physics world
-      box.rotateY(Math.PI / 3);
-      box.position.x = x + 0.5;
-      box.position.z = newZ;
+      box.mesh.rotateY(Math.PI / 3);
+      box.mesh.position.x = x + 0.5;
+      box.mesh.position.z = newZ;
+      box.rigidBody.setTranslation(
+        new RAPIER.Vector3(
+          box.mesh.position.x,
+          box.mesh.position.y,
+          box.mesh.position.z
+        ),
+        false
+      );
+      box.rigidBody.setRotation(
+        new RAPIER.Quaternion(
+          box.mesh.quaternion.x,
+          box.mesh.quaternion.y,
+          box.mesh.quaternion.z,
+          box.mesh.quaternion.w
+        ),
+        false
+      );
 
       const firstAdditionalBox = createBox({
         x: x + 2,
         y,
         z: newZ,
         world,
+        scene,
         arrayOfBoxes,
       });
       // TODO: connect it with physics world
-      firstAdditionalBox.rotateY(Math.PI / 2);
-      scene.add(firstAdditionalBox);
+      firstAdditionalBox.mesh.rotateY(Math.PI / 2);
+      firstAdditionalBox.rigidBody.setTranslation(
+        new RAPIER.Vector3(
+          firstAdditionalBox.mesh.position.x,
+          firstAdditionalBox.mesh.position.y,
+          firstAdditionalBox.mesh.position.z
+        ),
+        false
+      );
+      firstAdditionalBox.rigidBody.setRotation(
+        new RAPIER.Quaternion(
+          firstAdditionalBox.mesh.quaternion.x,
+          firstAdditionalBox.mesh.quaternion.y,
+          firstAdditionalBox.mesh.quaternion.z,
+          firstAdditionalBox.mesh.quaternion.w
+        ),
+        false
+      );
 
       const secondAdditionalBox = createBox({
         x: x + 3.5,
         y,
         z: newZ,
         world,
+        scene,
         arrayOfBoxes,
       });
       // TODO: connect it with physics world
-      secondAdditionalBox.rotateY(-Math.PI / 3);
-      scene.add(secondAdditionalBox);
+      secondAdditionalBox.mesh.rotateY(-Math.PI / 3);
+      secondAdditionalBox.rigidBody.setTranslation(
+        new RAPIER.Vector3(
+          secondAdditionalBox.mesh.position.x,
+          secondAdditionalBox.mesh.position.y,
+          secondAdditionalBox.mesh.position.z
+        ),
+        false
+      );
+      secondAdditionalBox.rigidBody.setRotation(
+        new RAPIER.Quaternion(
+          secondAdditionalBox.mesh.quaternion.x,
+          secondAdditionalBox.mesh.quaternion.y,
+          secondAdditionalBox.mesh.quaternion.z,
+          secondAdditionalBox.mesh.quaternion.w
+        ),
+        false
+      );
 
       continue;
     }
@@ -114,30 +157,81 @@ RAPIER.init().then(() => {
 
     if ((index / 20) % 2 !== 0) {
       // TODO: connect it with physics world
-      box.rotateY(-Math.PI / 3);
-      box.position.x = x + 0.5;
+      box.mesh.rotateY(-Math.PI / 3);
+      box.mesh.position.x = x + 0.5;
+      box.rigidBody.setTranslation(
+        new RAPIER.Vector3(
+          box.mesh.position.x,
+          box.mesh.position.y,
+          box.mesh.position.z
+        ),
+        false
+      );
+      box.rigidBody.setRotation(
+        new RAPIER.Quaternion(
+          box.mesh.quaternion.x,
+          box.mesh.quaternion.y,
+          box.mesh.quaternion.z,
+          box.mesh.quaternion.w
+        ),
+        false
+      );
 
       const firstAdditionalBox = createBox({
         x: x + 2,
         y,
         z,
         world,
+        scene,
         arrayOfBoxes,
       });
       // TODO: connect it with physics world
-      firstAdditionalBox.rotateY(Math.PI / 2);
-      scene.add(firstAdditionalBox);
+      firstAdditionalBox.mesh.rotateY(Math.PI / 2);
+      firstAdditionalBox.rigidBody.setTranslation(
+        new RAPIER.Vector3(
+          firstAdditionalBox.mesh.position.x,
+          firstAdditionalBox.mesh.position.y,
+          firstAdditionalBox.mesh.position.z
+        ),
+        false
+      );
+      firstAdditionalBox.rigidBody.setRotation(
+        new RAPIER.Quaternion(
+          firstAdditionalBox.mesh.quaternion.x,
+          firstAdditionalBox.mesh.quaternion.y,
+          firstAdditionalBox.mesh.quaternion.z,
+          firstAdditionalBox.mesh.quaternion.w
+        ),
+        false
+      );
 
       const secondAdditionalBox = createBox({
         x: x + 3.5,
         y,
         z,
         world,
+        scene,
         arrayOfBoxes,
       });
       // TODO: connect it with physics world
-      secondAdditionalBox.rotateY(Math.PI / 3);
-      scene.add(secondAdditionalBox);
+      secondAdditionalBox.mesh.rotateY(Math.PI / 3);
+      secondAdditionalBox.rigidBody.setTranslation(
+        new RAPIER.Vector3(
+          secondAdditionalBox.mesh.position.x,
+          secondAdditionalBox.mesh.position.y,
+          secondAdditionalBox.mesh.position.z
+        ),
+        false
+      );
+      secondAdditionalBox.rigidBody.setRotation(
+        new RAPIER.Quaternion(
+          secondAdditionalBox.mesh.quaternion.x,
+          secondAdditionalBox.mesh.quaternion.y,
+          secondAdditionalBox.mesh.quaternion.z,
+          secondAdditionalBox.mesh.quaternion.w
+        ),
+        false
+      );
     }
   }
 
@@ -153,11 +247,11 @@ RAPIER.init().then(() => {
 
     world.step();
 
-    arrayOfBoxes.forEach(({ cubeRigidBody, mesh }) => {
-      const position = cubeRigidBody.translation();
+    arrayOfBoxes.forEach(({ rigidBody, mesh }) => {
+      const position = rigidBody.translation();
       mesh.position.set(position.x, position.y, position.z);
 
-      const rotation = cubeRigidBody.rotation();
+      const rotation = rigidBody.rotation();
       mesh.quaternion.set(rotation.x, rotation.y, rotation.z, rotation.w);
     });
 
@@ -185,7 +279,7 @@ RAPIER.init().then(() => {
   const debugObject = {
     start: () => {
       const impulse = { x: 0, y: 0, z: -2 };
-      arrayOfBoxes[18].cubeRigidBody.addForce(impulse, true);
+      arrayOfBoxes[18].rigidBody.addForce(impulse, true);
     },
   };
 
