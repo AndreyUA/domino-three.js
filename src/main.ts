@@ -244,7 +244,7 @@ RAPIER.init().then(() => {
   let oldElapseTime = 0;
   const tick = () => {
     const elapsedTime = clock.getElapsedTime();
-    const _deltaTime = elapsedTime - oldElapseTime;
+    // const _deltaTime = elapsedTime - oldElapseTime;
     oldElapseTime = elapsedTime;
 
     world.step();
